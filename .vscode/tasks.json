@@ -6,15 +6,13 @@
 			"label": "C/C++: gcc build active file",
 			"command": "/usr/bin/gcc",
 			"args": [
+				"-fopenmp",
 				"-fdiagnostics-color=always",
 				"-g",
 				"-Wl,-z,stack-size=8388608",
-				"-O0",
+				"-O3",
 				"-Wno-unused-result",
 				"${file}",
-
-
-				
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}",
 				
@@ -33,10 +31,11 @@
 			"label": "C/C++: g++ build active file",
 			"command": "/usr/bin/g++",
 			"args": [
+				"-fopenmp",
 				"-fdiagnostics-color=always",
 				"-g",
 				"-Wl,-z,stack-size=8388608",
-				"-O0",
+				"-O3",
 				"-Wno-unused-result",
 				"${file}",
 				"-o",

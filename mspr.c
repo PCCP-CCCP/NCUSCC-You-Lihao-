@@ -15,37 +15,45 @@ void mergeint(int a[],int alen,int b[],int blen,int tmp[]){
         }
         ++k;
     }
-    #pragma omp parallel num_threads(32) for schedule(dynamic)
     for(int x=i;x<alen;++x,++k){
         tmp[k]=a[x];
     }
-    #pragma omp parallel num_threads(32) for schedule(dynamic)
     for(int x=j;x<blen;++x,++k){
         tmp[k]=b[x];
     }
 }
-void msint(int arr[],int len,int tmp[]){
+void msint(int arr[],int len,int tmp[],int dep){
     if(len<=1){
         return;
     }
     int mid=len/2;
-    //omp_set_num_threads(32);
-    #pragma omp parallel num_threads(32) sections
-    {
-        #pragma omp section
+    if(dep<4){
+        #pragma omp parallel sections
         {
-            msint(arr,mid,tmp);
+            #pragma omp section
+            {
+                msint(arr,mid,tmp,dep+1);
+            }
+            #pragma omp section
+            {
+                msint(arr+mid,len-mid,tmp+mid,dep+1);
+            }
         }
-        #pragma omp section
-        {
-            msint(arr+mid,len-mid,tmp+mid);
+        int i=0,j=mid;
+        mergeint(arr,mid,arr+mid,len-mid,tmp);
+        #pragma omp parallel for schedule(dynamic)
+        for(int i=0;i<len;i++){
+            arr[i]=tmp[i];
         }
     }
-    int i=0,j=mid;
-    mergeint(arr,mid,arr+mid,len-mid,tmp);
-    #pragma omp parallel num_threads(32) for schedule(dynamic)
-    for(int i=0;i<len;i++){
-        arr[i]=tmp[i];
+    else{
+        msint(arr,mid,tmp,dep+1);
+        msint(arr+mid,len-mid,tmp+mid,dep+1);
+        int i=0,j=mid;
+        mergeint(arr,mid,arr+mid,len-mid,tmp);
+        for(int i=0;i<len;i++){
+            arr[i]=tmp[i];
+        }
     }
 }
 void mergefloat(double a[],int alen,double b[],int blen,double tmp[]){
@@ -61,11 +69,9 @@ void mergefloat(double a[],int alen,double b[],int blen,double tmp[]){
         }
         ++k;
     }
-    #pragma omp parallel num_threads(32) for schedule(dynamic)
     for(int x=i;x<alen;++x,++k){
         tmp[k]=a[x];
     }
-    #pragma omp parallel num_threads(32) for schedule(dynamic)
     for(int x=j;x<blen;++x,++k){
         tmp[k]=b[x];
     }
@@ -75,8 +81,7 @@ void msfloat(double arr[],int len,double tmp[]){
         return;
     }
     int mid=len/2;
-    //omp_set_num_threads(32);
-    #pragma omp parallel num_threads(32) sections
+    #pragma omp parallel sections
     {
         #pragma omp section
         {
@@ -89,7 +94,7 @@ void msfloat(double arr[],int len,double tmp[]){
     }
     int i=0,j=mid;
     mergefloat(arr,mid,arr+mid,len-mid,tmp);
-    #pragma omp parallel num_threads(32) for schedule(dynamic)
+    #pragma omp parallel for schedule(dynamic)
     for(int i=0;i<len;i++){
         arr[i]=tmp[i];
     }
@@ -101,29 +106,29 @@ int main(){
     freopen("result(mspl).txt","w",stdout);
     scanf("%d%d",&flag,&n);
     printf("%d %d\n",flag,n);
-    //omp_set_num_threads(32);
+    omp_set_num_threads(32);//omp_set_num_threads(16);
     if(!flag){
         int a[N];
-        #pragma omp parallel num_threads(32) for schedule(dynamic)
+        #pragma omp parallel for schedule(dynamic)
         for(int i=1;i<=n;i++){
             scanf("%d",&a[i]);
         }
         int tmp[N];
-        msint(a+1,n,tmp);
-        #pragma omp parallel num_threads(32) for schedule(dynamic)
+        msint(a+1,n,tmp,1);
+        #pragma omp parallel for schedule(dynamic)
         for(int i=1;i<=n;i++){
             printf("%d\n",a[i]);
         }
     }
     else{
         double b[N];
-        #pragma omp parallel num_threads(32) for schedule(dynamic)
+        #pragma omp parallel for schedule(dynamic)
         for(int i=1;i<=n;i++){
             scanf("%lf",&b[i]);
         }
         double tmp[N];
         msfloat(b+1,n,tmp);
-        #pragma omp parallel num_threads(32) num_ for schedule(dynamic)
+        #pragma omp parallel for schedule(dynamic)
         for(int i=1;i<=n;i++){
             printf("%lf\n",b[i]);
         }
