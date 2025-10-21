@@ -118,7 +118,7 @@ void qsfloat(double* arr,int l,int r) {
     stack=NULL;
 }
 int main() {
-    const int N=5e5+10;
+    const int N=1e6+10;
     int flag,n;
     freopen("testdata.txt","r",stdin);
     freopen("result(nc).txt","w",stdout);

@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<omp.h>
-const int N=1e5+10;
+const int N=1e6+10;
 void mergeint(int a[],int alen,int b[],int blen,int tmp[]){
     int i=0,j=0,k=0;
     while (i<alen&&j<blen){
@@ -69,7 +69,7 @@ void msfloat(double arr[],int len,double tmp[]){
     }
 }
 int main(){
-    const int N=5e5+10;
+    const int N=1e6+10;
     int flag,n;
     freopen("testdata.txt","r",stdin);
     freopen("result(msnp).txt","w",stdout);

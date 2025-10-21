@@ -6,7 +6,7 @@
 #include<algorithm>
 #include<map>
 using namespace std;
-const int N=5e5+10;
+const int N=1e6+10;
 int n,nlim_l,nlim_r,a[N],flag;//0 is int, 1 is float;
 int l,r;//data value limit
 double b[N];

@@ -75,7 +75,7 @@ void qsfloat(double b[],int len){
     qsfloat(b+k,len-k);
 }
 int main(){
-    const int N=5e5+10;
+    const int N=1e6+10;
     int flag,n;
     freopen("testdata.txt","r",stdin);
     freopen("result(rc).txt","w",stdout);
