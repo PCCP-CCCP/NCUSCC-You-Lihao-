@@ -15,7 +15,7 @@ def main():
     # type(T)
     # file.write(T)
 
-    with open('testdetail(O0)(int).txt','w',encoding='utf-8') as file:
+    with open('testdetail(default)(int).txt','w',encoding='utf-8') as file:
 
         '''
         flag=input('数据的类型（0为整形，1为浮点）：')
@@ -173,14 +173,14 @@ def main():
         plt.ylabel('runtime(/s)')
 
         plt.legend(loc="upper left")
-        plt.savefig("n-time(O0)(int).svg", dpi=2400,format="svg")
+        plt.savefig("n-time(default)(int).svg", dpi=2400,format="svg")
          
         plt.close()
 
         x=np.array(["qsrc","qsnc","msnp","mspr"])  
         y=np.array([rc_avg_time,nc_avg_time,np_avg_time,pr_avg_time])  
         plt.bar(x,y)
-        plt.savefig("alo-avetime_bar(O0)(int).svg",dpi=2400,format="svg")
+        plt.savefig("alo-avetime_bar(default)(int).svg",dpi=2400,format="svg")
 
 def f_1(x,A,B):
     return A*x*np.log2(x)+B

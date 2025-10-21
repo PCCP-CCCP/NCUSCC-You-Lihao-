@@ -69,7 +69,6 @@ void msfloat(double arr[],int len,double tmp[]){
     }
 }
 int main(){
-    const int N=1e6+10;
     int flag,n;
     freopen("testdata.txt","r",stdin);
     freopen("result(msnp).txt","w",stdout);
